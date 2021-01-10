@@ -154,7 +154,7 @@ MIDROUND_ANTAG WIZARD
 #MIN_POP TRAITOR 0
 #MAX_POP TRAITOR -1
 
-#MIN_POP TRAITORBRO 0
+MIN_POP TRAITORBRO 8
 #MAX_POP TRAITORBRO -1
 
 #MIN_POP TRAITORCHAN 15
@@ -197,7 +197,7 @@ SHUTTLE_REFUEL_DELAY 12000
 ## Used as (Antagonists = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
 TRAITOR_SCALING_COEFF 6
-BROTHER_SCALING_COEFF 6
+BROTHER_SCALING_COEFF 7
 CHANGELING_SCALING_COEFF 6
 
 ## Variables calculate how number of open security officer positions will scale to population.
@@ -341,7 +341,7 @@ NEAR_DEATH_EXPERIENCE
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
-DEFAULT_LAWS 0
+DEFAULT_LAWS 3
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -378,23 +378,23 @@ RANDOM_LAWS corporate
 
 ## Make sure there are no spaces between the law_id and the number.
 
-LAW_WEIGHT custom,0
+LAW_WEIGHT crewsimov,33
 
 ## standard-ish laws. These are fairly ok to run
-LAW_WEIGHT asimov,32
+LAW_WEIGHT asimov,11
 LAW_WEIGHT asimovpp,12
-LAW_WEIGHT paladin,12
-LAW_WEIGHT robocop,12
-LAW_WEIGHT corporate,12
+LAW_WEIGHT paladin5,10
+LAW_WEIGHT robocop,10
+LAW_WEIGHT corporate,10
 
 ## Quirky laws. Shouldn't cause too much harm
 LAW_WEIGHT hippocratic,3
-LAW_WEIGHT maintain,4
-LAW_WEIGHT drone,3
+LAW_WEIGHT maintain,2
+LAW_WEIGHT drone,0
 LAW_WEIGHT liveandletlive,3
 LAW_WEIGHT peacekeeper,3
-LAW_WEIGHT reporter,4
-LAW_WEIGHT hulkamania,4
+LAW_WEIGHT reporter,2
+LAW_WEIGHT hulkamania,1
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0
@@ -435,7 +435,7 @@ ROUNDSTART_RACES plasmaman
 
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal
-#ROUNDSTART_RACES jelly
+ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES golem
 #ROUNDSTART_RACES adamantine
 #ROUNDSTART_RACES plasma
@@ -445,6 +445,7 @@ ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES uranium
 #ROUNDSTART_RACES abductor
 #ROUNDSTART_RACES synth
+ROUNDSTART_RACES felinid
 
 ## Races that are straight upgrades. If these are on expect powergamers to always pick them
 #ROUNDSTART_RACES skeleton
@@ -550,7 +551,7 @@ ROUNDSTART_TRAITS
 #ENABLE_NIGHT_SHIFTS
 
 ## Enable randomized shift start times##
-#RANDOMIZE_SHIFT_TIME
+RANDOMIZE_SHIFT_TIME
 
 ## Sets shift time to server time at roundstart. Overridden by RANDOMIZE_SHIFT_TIME ##
 #SHIFT_TIME_REALTIME
