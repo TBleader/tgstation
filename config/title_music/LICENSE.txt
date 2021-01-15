@@ -32,3 +32,5 @@ Unless otherwise noted all sounds were created by Cuban Pete on July 26, 2555. T
 
 
 ---ADD LICENSING INFORMATION BELOW---
+
+title3noisemaker.ogg converted to ogg from original youtube source https://www.youtube.com/watch?v=BY-1SrsLER0, remix produced by Noisemaker based off the original Tintin on the Moon by Jeroen Tel
