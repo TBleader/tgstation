@@ -266,7 +266,7 @@
 		M.fields["ma_dis_d"]	= H.get_quirk_string(medical, CAT_QUIRK_MAJOR_DISABILITY)
 		M.fields["cdi"]			= "None"
 		M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-		M.fields["notes"]		= H.get_quirk_string(!medical, CAT_QUIRK_NOTES)
+		M.fields["notes"]		= H.med_record + "\n\n\n\n" + H.get_quirk_string(!medical, CAT_QUIRK_NOTES)
 		M.fields["notes_d"]		= H.get_quirk_string(medical, CAT_QUIRK_NOTES)
 		medical += M
 
