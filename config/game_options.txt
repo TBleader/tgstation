@@ -384,8 +384,8 @@ LAW_WEIGHT crewsimov,33
 LAW_WEIGHT asimov,11
 LAW_WEIGHT asimovpp,12
 LAW_WEIGHT paladin5,10
-LAW_WEIGHT robocop,10
-LAW_WEIGHT corporate,10
+LAW_WEIGHT robocop,9
+LAW_WEIGHT corporate,9
 
 ## Quirky laws. Shouldn't cause too much harm
 LAW_WEIGHT hippocratic,3
@@ -395,6 +395,8 @@ LAW_WEIGHT liveandletlive,3
 LAW_WEIGHT peacekeeper,3
 LAW_WEIGHT reporter,2
 LAW_WEIGHT hulkamania,1
+LAW_WEIGHT santimov,1
+LAW_WEIGHT kowloonspawn,1
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0
