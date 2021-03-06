@@ -49,7 +49,7 @@
 
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
-#define VOX_DELAY 600
+#define VOX_DELAY 15 // decreased, don't abuse
 /mob/living/silicon/ai/verb/announcement_help()
 
 	set name = "Announcement Help"

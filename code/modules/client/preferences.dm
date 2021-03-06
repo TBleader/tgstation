@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1 //Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 3
+	var/max_save_slots = 8 // we modify to 8 because we want more slots
 
 	//non-preference stuff
 	var/muted = 0
@@ -90,6 +90,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/custom_names = list()
 	var/preferred_ai_core_display = "Blue"
 	var/prefered_security_department = SEC_DEPT_RANDOM
+
+	// *** EDIT STARTS HERE ***
+	var/med_record = ""
+	// *** EDIT ENDS HERE ***
 
 	//Quirk list
 	var/list/all_quirks = list()
@@ -258,6 +262,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG]) //doesn't work unless random body
 				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_AGE]'>Always Random Age: [(randomise[RANDOM_AGE]) ? "Yes" : "No"]</A>"
 				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_AGE_ANTAG]'>When Antagonist: [(randomise[RANDOM_AGE_ANTAG]) ? "Yes" : "No"]</A>"
+
+			// *** EDIT STARTS HERE ***
+			dat += "<h3>Character Records</h3>"
+			dat += "<b>Medical Record:</b> <a href='?_src_=prefs;preference=med_record;task=input'>Set Medical Record</a>"
+			// *** EDIT ENDS HERE ***
 
 			dat += "<br><br><b>Special Names:</b><BR>"
 			var/old_group
@@ -1298,6 +1307,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and . It must not contain any words restricted by IC chat and name filters.</font>")
 
+				// *** EDIT STARTS HERE ***
+				if("med_record")
+					var/medmsg = input(user, "Enter your character's medical record:", "Character Preference",html_decode(med_record)) as message
+					if(medmsg)
+						//var/newmsg = copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN)
+						//medmsg = copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN)
+						// TODO MAKE SURE THEY DONT ENTER A FUCK HUGE LONG RECORD AND BREAK STUFF???
+						medmsg = html_encode(medmsg)
+						med_record = medmsg
+				// *** EDIT ENDS HERE ***
+
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
@@ -1943,6 +1963,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.real_name = real_name
 	character.name = character.real_name
+
+	// *** EDIT STARTS HERE ***
+	character.med_record = med_record
+	// *** EDIT ENDS HERE ***
 
 	character.gender = gender
 	character.age = age

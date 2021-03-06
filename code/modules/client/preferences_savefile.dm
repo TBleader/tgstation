@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 39
+#define SAVEFILE_VERSION_MAX 40
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -335,7 +335,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["key_bindings"], key_bindings)
 	WRITE_FILE(S["hearted_until"], (hearted_until > world.realtime ? hearted_until : null))
 	return TRUE
-/*
+
 /datum/preferences/proc/load_character(slot)
 	if(!path)
 		return FALSE
@@ -371,6 +371,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["gender"], gender)
 	READ_FILE(S["body_type"], body_type)
 	READ_FILE(S["age"], age)
+	// *** EDIT STARTS HERE ***
+	READ_FILE(S["med_record"], med_record)
+	// *** EDIT ENDS HERE ***
 	READ_FILE(S["hair_color"], hair_color)
 	READ_FILE(S["facial_hair_color"], facial_hair_color)
 	READ_FILE(S["eye_color"], eye_color)
@@ -519,6 +522,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["gender"] , gender)
 	WRITE_FILE(S["body_type"] , body_type)
 	WRITE_FILE(S["age"] , age)
+	// *** EDIT STARTS HERE ***
+	WRITE_FILE(S["med_record"], med_record)
+	// *** EDIT ENDS HERE ***
 	WRITE_FILE(S["hair_color"] , hair_color)
 	WRITE_FILE(S["facial_hair_color"] , facial_hair_color)
 	WRITE_FILE(S["eye_color"] , eye_color)
@@ -569,7 +575,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["all_quirks"] , all_quirks)
 
 	return TRUE
-*/
+
 
 /proc/sanitize_keybindings(value)
 	var/list/base_bindings = sanitize_islist(value,list())

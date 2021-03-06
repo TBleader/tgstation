@@ -44,6 +44,9 @@
 	var/list/channels = list()  // Map from name (see communications.dm) to on/off. First entry is current department (:h)
 	var/list/secure_radio_connections
 
+	// *** EDIT STARTS HERE ***
+	var/list/radio_sounds = list('d_legacies_station/sound/effects/radio1.ogg', 'd_legacies_station/sound/effects/radio2.ogg')
+
 /obj/item/radio/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
@@ -221,6 +224,11 @@
 		return
 	if(!M.IsVocal())
 		return
+	// *** EDIT STARTS HERE ***
+	if(radio_sounds.len)
+		var/sound/radio_sound = pick(radio_sounds)
+		playsound(M.loc, radio_sound, 50, 1)
+	// *** EDIT ENDS HERE ***
 
 	if(use_command)
 		spans |= SPAN_COMMAND
