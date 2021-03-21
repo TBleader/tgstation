@@ -12,6 +12,8 @@
 	var/addiction_loss_per_stage = list(0.5, 0.5, 1, 1.5)
 	///Rate at which high sanity helps addiction loss
 	var/high_sanity_addiction_loss = 2
+	///Amount of drugs you need in your system to be satisfied
+	var/addiction_relief_treshold = MIN_ADDICTION_REAGENT_AMOUNT
 
 ///Called when you gain addiction points somehow. Takes a mind as argument and sees if you gained the addiction
 /datum/addiction/proc/on_gain_addiction_points(datum/mind/victim_mind)
@@ -44,14 +46,14 @@
 	to_chat(victim_mind.current, "<span class='notice'>You feel like you've gotten over your need for drugs.</span>")
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
-/datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon, delta_time = 2)
+/datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon, delta_time, times_fired)
 	var/current_addiction_cycle = LAZYACCESS(affected_carbon.mind.active_addictions, type) //If this is null, we're not addicted
 	var/on_drug_of_this_addiction = FALSE
 	for(var/datum/reagent/possible_drug as anything in affected_carbon.reagents.reagent_list) //Go through the drugs in our system
 		for(var/addiction in possible_drug.addiction_types) //And check all of their addiction types
-			if(addiction == type && possible_drug.volume >= MIN_ADDICTION_REAGENT_AMOUNT) //If one of them matches, and we have enough of it in our system, we're not losing addiction
+			if(addiction == type && possible_drug.volume >= addiction_relief_treshold) //If one of them matches, and we have enough of it in our system, we're not losing addiction
 				if(current_addiction_cycle)
-					LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
+					LAZYSET(affected_carbon.mind.active_addictions, addiction, 1) //Keeps withdrawal at first cycle.
 				on_drug_of_this_addiction = TRUE
 				return
 
@@ -81,6 +83,8 @@
 			withdrawal_enters_stage_2(affected_carbon)
 		if(WITHDRAWAL_STAGE3_START_CYCLE)
 			withdrawal_enters_stage_3(affected_carbon)
+		else //you are not on withdrawl
+			SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "[type]_addiction")
 
 	///One cycle is 2 seconds
 	switch(withdrawal_stage)
@@ -113,7 +117,7 @@
 
 /// Called when addiction is in stage 2 every process
 /datum/addiction/proc/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
-	if(DT_PROB(10, delta_time))
+	if(DT_PROB(10, delta_time) )
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[2]]</span>")
 
 

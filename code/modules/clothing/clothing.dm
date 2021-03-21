@@ -66,6 +66,7 @@
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
 		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
+	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
@@ -235,6 +236,7 @@
 			name = "tattered [initial(name)]"
 
 	update_clothes_damaged_state(CLOTHING_DAMAGED)
+	update_appearance()
 
 /obj/item/clothing/Destroy()
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
@@ -411,17 +413,19 @@
 
 /obj/item/clothing/update_overlays()
 	. = ..()
-	if(damaged_clothes)
-		var/index = "[REF(initial(icon))]-[initial(icon_state)]"
-		var/static/list/damaged_clothes_icons = list()
-		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
-		if(!damaged_clothes_icon)
-			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1) //we only want to apply damaged effect to the initial icon_state for each object
-			damaged_clothes_icon.Blend("#fff", ICON_ADD) //fills the icon_state with white (except where it's transparent)
-			damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
-			damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
-			damaged_clothes_icons[index] = damaged_clothes_icon
-		. += damaged_clothes_icon
+	if(!damaged_clothes)
+		return
+
+	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
+	var/static/list/damaged_clothes_icons = list()
+	var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
+	if(!damaged_clothes_icon)
+		damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1) //we only want to apply damaged effect to the initial icon_state for each object
+		damaged_clothes_icon.Blend("#fff", ICON_ADD) //fills the icon_state with white (except where it's transparent)
+		damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
+		damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
+		damaged_clothes_icons[index] = damaged_clothes_icon
+	. += damaged_clothes_icon
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -501,6 +505,7 @@ BLIND     // can't see anything
 			else
 				M.visible_message("<span class='danger'>[src] fall[p_s()] apart, completely shredded!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 		name = "shredded [initial(name)]" // change the name -after- the message, not before.
+		update_appearance()
 	else
 		..()
 

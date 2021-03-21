@@ -15,6 +15,7 @@
 	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	attack_verb = "slash"
+	attack_effect = ATTACK_EFFECT_CLAW
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
@@ -33,7 +34,7 @@
 	ass_image = 'icons/ass/asslizard.png'
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally
-/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi)
+/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
 	return
 
 /datum/species/lizard/random_name(gender,unique,lastname)

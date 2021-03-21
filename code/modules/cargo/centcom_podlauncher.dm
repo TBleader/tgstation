@@ -190,9 +190,9 @@
 			. = TRUE
 		if("buildMode")
 			var/mob/holder_mob = holder.mob
-			if (holder_mob)
+			if (holder_mob && (holder.holder?.rank?.rights & R_BUILD))
 				togglebuildmode(holder_mob)
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Build Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+				SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Build Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 			. = TRUE
 		if("loadDataFromPreset")
 			var/list/savedData = params["payload"]
@@ -578,7 +578,7 @@
 
 /datum/centcom_podlauncher/proc/InterceptClickOn(user,params,atom/target) //Click Intercept so we know where to send pods where the user clicks
 	var/list/modifiers = params2list(params)
-	
+
 	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
 
 	if (launcherActivated)
@@ -709,7 +709,7 @@
 	if (isnull(target_turf))
 		return
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = DuplicateObject(temp_pod) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
-	toLaunch.update_icon()//we update_icon() here so that the door doesnt "flicker on" right after it lands
+	toLaunch.update_appearance()//we update_appearance() here so that the door doesnt "flicker on" right after it lands
 	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding]
 	toLaunch.forceMove(shippingLane)
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those

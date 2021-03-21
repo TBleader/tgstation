@@ -141,9 +141,9 @@
 
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
-	if(severity == 3)
-		return
-	..()
+	if(severity == EXPLODE_LIGHT)
+		return FALSE
+	return ..()
 
 /obj/machinery/door/poddoor/do_animate(animation)
 	switch(animation)
@@ -155,10 +155,8 @@
 			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
 
 /obj/machinery/door/poddoor/update_icon_state()
-	if(density)
-		icon_state = "closed"
-	else
-		icon_state = "open"
+	. = ..()
+	icon_state = density ? "closed" : "open"
 
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
 	return
