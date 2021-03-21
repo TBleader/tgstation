@@ -69,15 +69,13 @@
 		if(16)
 			new /obj/item/immortality_talisman(src)
 		if(17)
-			new /obj/item/voodoo(src)
-		if(18)
 			new /obj/item/book/granter/spell/summonitem(src)
-		if(19)
+		if(18)
 			new /obj/item/book_of_babel(src)
-		if(20)
+		if(19)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-		if(21)
+		if(20)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 	spawned_loot = TRUE
 	qdel(item)
@@ -1297,8 +1295,7 @@
 
 /obj/item/hierophant_club/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
-	var/area/destination_area = turf_to_teleport_to.loc
-	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE) || destination_area.area_flags & NOTELEPORT)
+	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE))
 		return
 	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)
@@ -1308,7 +1305,7 @@
 	sleep(2)
 	if(!M)
 		return
-	M.forceMove(turf_to_teleport_to)
+	var/success = do_teleport(M, turf_to_teleport_to, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 	sleep(1)
 	if(!M)
 		return
@@ -1317,7 +1314,7 @@
 	if(!M)
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
-	if(user != M)
+	if(user != M && success)
 		log_combat(user, M, "teleported", null, "from [AREACOORD(source)]")
 
 /obj/item/hierophant_club/pickup(mob/living/user)
